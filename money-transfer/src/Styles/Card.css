@@ -1,0 +1,32 @@
+.visa-card {
+    width: 300px;
+    height: 200px;
+    border-radius: 10px;
+    display: flex;
+    perspective: 1000px;
+    transition: transform 0.5s;
+    background: linear-gradient(to right, #00c3ff, #0d01b6);
+    color: #fff;
+    margin: 10px;
+  }
+  
+  .card-front {
+    width: 100%;
+    height: 70%;
+    position: absolute;
+    backface-visibility: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    
+  }
+  
+  .card-front {
+    transform: rotateY(0deg);
+  }
+
+  .card-holder, .valid-thru {
+    background: transparent;
+  }
+  

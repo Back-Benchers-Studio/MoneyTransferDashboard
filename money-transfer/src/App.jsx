@@ -3,18 +3,16 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import Overview from './pages/Overview';
+import BankAccounts from './pages/BankAccounts';
+import VodafoneCashAccounts from './pages/VodafoneCashAccounts';
 
-import Dashboard from './Components/DashBoard'
 
 function App() {
 
   return (
-    <>
-      <div>
-        <Dashboard/>
-      </div>
-    </>
-  )
+    <BankAccounts/>
+  );
 }
 
 export default App
