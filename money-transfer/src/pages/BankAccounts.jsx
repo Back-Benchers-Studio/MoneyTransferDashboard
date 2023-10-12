@@ -92,7 +92,7 @@ function BankAccounts() {
     if (newCard.cardNumber && newCard.cardHolder && newCard.validThru) {
       console.log("New card data:", newCard);
       const addedCard = {
-        id: 4,
+        id: bankCards.length + 1,
         cardHolder: newCard.cardHolder,
         cardNumber: newCard.cardNumber,
         validThru: newCard.validThru,
@@ -101,7 +101,7 @@ function BankAccounts() {
       setBankCardsData([
         ...bankCards,
         {
-          id: 4,
+          id: bankCards.length + 1,
           cardHolder: newCard.cardHolder,
           cardNumber: newCard.cardNumber,
           validThru: newCard.validThru,

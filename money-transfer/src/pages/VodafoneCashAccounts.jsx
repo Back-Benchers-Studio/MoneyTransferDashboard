@@ -87,7 +87,7 @@ function VodafoneCashAccounts() {
     if (newCard.MobileNumber && newCard.NumberHolder) {
       console.log("New card data:", newCard);
       const addedCard = {
-        id: 4,
+        id: vodafoneCards.length + 1,
         numberHolder: newCard.NumberHolder,
         mobileNumber: newCard.MobileNumber,
       };
@@ -95,12 +95,12 @@ function VodafoneCashAccounts() {
       setvodafoneCardsData([
         ...vodafoneCards,
         {
-          id: 4,
+          id: vodafoneCards.length + 1,
           NumberHolder: newCard.NumberHolder,
           MobileNumber: newCard.MobileNumber,
         }
         ]);
-      console.log("Bank cards data after update:", vodafoneCards);
+      console.log("vodafone cash cards data after update:", vodafoneCards);
       setNewCard({ MobileNumber: '', NumberHolder: '' });
     }
   };
