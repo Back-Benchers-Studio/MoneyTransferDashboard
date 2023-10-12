@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import VisaCard from "../Components/Card";
 import "../Styles/BankAccount.css";
-import AddCardModal from "../Components/AddCardModal";
 
 function BankAccounts() {
   const [bankCards, setBankCardsData] = useState([]);
@@ -21,35 +20,31 @@ function BankAccounts() {
     validThru: '',
   });
 
-  const [isAddCardModalOpen, setIsAddCardModalOpen] = useState(false);
 
-  const bankCardsData = [
-    {
-      id: 1,
-      cardHolder: "John Doe",
-      cardNumber: "4512 **** **** 3456",
-      validThru: "12/25",
-    },
-    {
-      id: 2,
-      cardHolder: "Jane Smith",
-      cardNumber: "5123 **** **** 7890",
-      validThru: "03/26",
-    },
-    {
-      id: 3,
-      cardHolder: "Jane Doe",
-      cardNumber: "5123 **** **** 7999",
-      validThru: "03/26",
-    },
-  ];
-
-  const mockTransactions = [
-    { id: 1, amount: 100, description: "Purchase 1" },
-    { id: 2, amount: 50, description: "Purchase 2" },
-  ];
 
   useEffect(() => {
+
+    const bankCardsData = [
+      {
+        id: 1,
+        cardHolder: "John Doe",
+        cardNumber: "4512 **** **** 3456",
+        validThru: "12/25",
+      },
+      {
+        id: 2,
+        cardHolder: "Jane Smith",
+        cardNumber: "5123 **** **** 7890",
+        validThru: "03/26",
+      },
+      {
+        id: 3,
+        cardHolder: "Jane Doe",
+        cardNumber: "5123 **** **** 7999",
+        validThru: "03/26",
+      },
+    ];
+    setBankCardsData(bankCardsData);
     
     const mockTransactions = [
       {
@@ -75,7 +70,7 @@ function BankAccounts() {
       newTransaction.amount &&
       newTransaction.description
     ) {
-      const selectedCardData = bankCardsData.find(
+      const selectedCardData = bankCards.find(
         (card) => card.cardNumber === newTransaction.selectedCard
       );
       if (selectedCardData) {
@@ -103,8 +98,16 @@ function BankAccounts() {
         validThru: newCard.validThru,
       };
       console.log("Added card data:", addedCard);
-      setBankCardsData((prevBankCardsData) => [...prevBankCardsData, addedCard]);
-      console.log("Bank cards data after update:", bankCardsData);
+      setBankCardsData([
+        ...bankCards,
+        {
+          id: 4,
+          cardHolder: newCard.cardHolder,
+          cardNumber: newCard.cardNumber,
+          validThru: newCard.validThru,
+        }
+        ]);
+      console.log("Bank cards data after update:", bankCards);
       setNewCard({ cardNumber: '', cardHolder: '', validThru: '' });
     }
   };
@@ -113,7 +116,7 @@ function BankAccounts() {
     <div>
       <h1>Bank Accounts</h1>
       <div className="bank-cards-container">
-        {bankCardsData.map((card) => (
+        {bankCards.map((card) => (
           <VisaCard
             key={card.id}
             cardHolder={card.cardHolder}
@@ -166,7 +169,7 @@ function BankAccounts() {
             }
           >
             <option value="">Select a Card</option>
-            {bankCardsData.map((card) => (
+            {bankCards.map((card) => (
               <option key={card.cardNumber} value={card.cardNumber}>
                 {card.cardHolder} - {card.cardNumber}
               </option>
