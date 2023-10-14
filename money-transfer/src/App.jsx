@@ -11,7 +11,7 @@ import VodafoneCashAccounts from './pages/VodafoneCashAccounts';
 function App() {
 
   return (
-    <VodafoneCashAccounts/>
+    <BankAccounts/>
   );
 }
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import VodafoneCashCard from "../Components/VodafoneCashCard";
-import "../Styles/BankAccount.css";
+import "../Styles/VodafoneCash.css";
 
 function VodafoneCashAccounts() {
   const [vodafoneCards, setvodafoneCardsData] = useState([]);
@@ -14,14 +14,11 @@ function VodafoneCashAccounts() {
   });
 
   const [newCard, setNewCard] = useState({
-    NumberHolder: '',
-    MobileNumber: '',
+    NumberHolder: "",
+    MobileNumber: "",
   });
 
-
-
   useEffect(() => {
-
     const vodafoneCardsData = [
       {
         id: 1,
@@ -40,7 +37,7 @@ function VodafoneCashAccounts() {
       },
     ];
     setvodafoneCardsData(vodafoneCardsData);
-    
+
     const mockTransactions = [
       {
         id: 1,
@@ -54,7 +51,6 @@ function VodafoneCashAccounts() {
         amount: 50,
         description: "Purchase 2",
       },
-      
     ];
     setTransactions(mockTransactions);
   }, []);
@@ -72,9 +68,9 @@ function VodafoneCashAccounts() {
         setTransactions([
           ...transactions,
           {
-            MobileNumber: selectedCardData.MobileNumber, 
+            MobileNumber: selectedCardData.MobileNumber,
             amount: newTransaction.amount,
-            description: newTransaction.description, 
+            description: newTransaction.description,
           },
         ]);
         setNewTransaction({ selectedCard: "", amount: "", description: "" });
@@ -98,10 +94,10 @@ function VodafoneCashAccounts() {
           id: vodafoneCards.length + 1,
           NumberHolder: newCard.NumberHolder,
           MobileNumber: newCard.MobileNumber,
-        }
-        ]);
+        },
+      ]);
       console.log("vodafone cash cards data after update:", vodafoneCards);
-      setNewCard({ MobileNumber: '', NumberHolder: '' });
+      setNewCard({ MobileNumber: "", NumberHolder: "" });
     }
   };
 
@@ -122,25 +118,43 @@ function VodafoneCashAccounts() {
         <h2>Add Card</h2>
         <label>Card Number:</label>
         <input
-          type="text"
+          type="number"
           value={newCard.MobileNumber}
-          onChange={(e) => setNewCard({ ...newCard, MobileNumber: e.target.value })}
+          onChange={(e) =>
+            setNewCard({ ...newCard, MobileNumber: e.target.value })
+          }
         />
         <label>Card Holder:</label>
         <input
           type="text"
           value={newCard.NumberHolder}
-          onChange={(e) => setNewCard({ ...newCard, NumberHolder: e.target.value })}
+          onChange={(e) =>
+            setNewCard({ ...newCard, NumberHolder: e.target.value })
+          }
         />
         <button onClick={handleAddCard}>Add Card</button>
       </div>
-      <div className="transactions">
+      <div className="transactions-container">
         <h2>Transactions</h2>
-        <ul style={{ listStyle: "none" }}>
+        <ul className="transactions-list">
           {transactions.map((transaction, index) => (
-            <li key={index}>
-              Mobile Number: {transaction.MobileNumber}, Amount:{" "}
-              {transaction.amount}, Description: {transaction.description}
+            <li key={index} className="transaction-item">
+              <div className="transaction-info">
+                <span className="transaction-label">Mobile Number:</span>
+                <span className="transaction-value">
+                  {transaction.MobileNumber}
+                </span>
+              </div>
+              <div className="transaction-info">
+                <span className="transaction-label">Amount:</span>
+                <span className="transaction-value">{transaction.amount}</span>
+              </div>
+              <div className="transaction-info">
+                <span className="transaction-label">Description:</span>
+                <span className="transaction-value">
+                  {transaction.description}
+                </span>
+              </div>
             </li>
           ))}
         </ul>
@@ -162,7 +176,7 @@ function VodafoneCashAccounts() {
             ))}
           </select>
           <input
-            type="text"
+            type="number"
             placeholder="Amount"
             value={newTransaction.amount}
             onChange={(e) =>
@@ -183,7 +197,6 @@ function VodafoneCashAccounts() {
           <button onClick={handleAddTransaction}>Add Transaction</button>
         </div>
       </div>
-      
     </div>
   );
 }

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import VisaCard from "../Components/Card";
 import "../Styles/BankAccount.css";
 
@@ -15,15 +15,13 @@ function BankAccounts() {
   });
 
   const [newCard, setNewCard] = useState({
-    cardNumber: '',
-    cardHolder: '',
-    validThru: '',
+    cardNumber: "",
+    cardHolder: "",
+    month: "",
+    year: "",
   });
 
-
-
   useEffect(() => {
-
     const bankCardsData = [
       {
         id: 1,
@@ -45,7 +43,7 @@ function BankAccounts() {
       },
     ];
     setBankCardsData(bankCardsData);
-    
+
     const mockTransactions = [
       {
         id: 1,
@@ -59,10 +57,12 @@ function BankAccounts() {
         amount: 50,
         description: "Purchase 2",
       },
-      
     ];
     setTransactions(mockTransactions);
   }, []);
+
+  const monthInputRef = useRef(null);
+  const yearInputRef = useRef(null);
 
   const handleAddTransaction = () => {
     if (
@@ -77,19 +77,46 @@ function BankAccounts() {
         setTransactions([
           ...transactions,
           {
-            cardNumber: selectedCardData.cardNumber, 
+            cardNumber: selectedCardData.cardNumber,
             amount: newTransaction.amount,
-            description: newTransaction.description, 
+            description: newTransaction.description,
           },
         ]);
         setNewTransaction({ selectedCard: "", amount: "", description: "" });
+        calculateTotalAmount();
       }
+    }
+  };
+
+  const handleMonthChange = (value) => {
+    setNewCard({ ...newCard, month: value });
+    if (value.length === 2) {
+      yearInputRef.current.focus();
+    }
+  };
+
+  const handleYearChange = (value) => {
+    setNewCard({ ...newCard, year: value });
+    if (value === "") {
+      monthInputRef.current.focus();
+    }
+  };
+
+  const handleYearKeyPress = (e) => {
+    if (e.key === "Backspace" && newCard.year === "") {
+      yearInputRef.current.blur();
+      monthInputRef.current.focus();
     }
   };
 
   const handleAddCard = () => {
     console.log("Adding a new card...");
-    if (newCard.cardNumber && newCard.cardHolder && newCard.validThru) {
+    if (
+      newCard.cardNumber &&
+      newCard.cardHolder &&
+      newCard.month &&
+      newCard.year
+    ) {
       console.log("New card data:", newCard);
       const addedCard = {
         id: bankCards.length + 1,
@@ -104,13 +131,22 @@ function BankAccounts() {
           id: bankCards.length + 1,
           cardHolder: newCard.cardHolder,
           cardNumber: newCard.cardNumber,
-          validThru: newCard.validThru,
-        }
-        ]);
+          validThru: newCard.month + "/" + newCard.year,
+        },
+      ]);
       console.log("Bank cards data after update:", bankCards);
-      setNewCard({ cardNumber: '', cardHolder: '', validThru: '' });
+      setNewCard({ cardNumber: "", cardHolder: "", month: "", year: "" });
+      yearInputRef.current.blur();
     }
   };
+
+  const calculateTotalAmount = () => {
+    const totalAmount = transactions.reduce((total, transaction) => {
+      return total + parseInt(transaction.amount);
+    }, 0);
+    return totalAmount;
+  };
+
 
   return (
     <div>
@@ -125,36 +161,78 @@ function BankAccounts() {
           />
         ))}
       </div>
-      {/* <button onClick={toggleAddCardModal}>Add Card (+)</button> */}
+
       <div className="add-card-form">
         <h2>Add Card</h2>
         <label>Card Number:</label>
         <input
           type="text"
           value={newCard.cardNumber}
-          onChange={(e) => setNewCard({ ...newCard, cardNumber: e.target.value })}
+          maxLength={16}
+          onChange={(e) =>
+            setNewCard({ ...newCard, cardNumber: e.target.value })
+          }
         />
         <label>Card Holder:</label>
         <input
           type="text"
           value={newCard.cardHolder}
-          onChange={(e) => setNewCard({ ...newCard, cardHolder: e.target.value })}
+          onChange={(e) =>
+            setNewCard({ ...newCard, cardHolder: e.target.value })
+          }
         />
         <label>Valid Thru:</label>
-        <input
-          type="text"
-          value={newCard.validThru}
-          onChange={(e) => setNewCard({ ...newCard, validThru: e.target.value })}
-        />
+        <div className="valid-thru-input">
+          <input
+            ref={monthInputRef}
+            type="number"
+            placeholder="MM"
+            maxLength="2"
+            size="2"
+            style={{ maxWidth: '30px' }}
+            value={newCard.month.substring(0, 2)}
+            onChange={(e) => handleMonthChange(e.target.value)}
+          />
+          <span>/</span>
+          <input
+            ref={yearInputRef}
+            type="number"
+            placeholder="YY"
+            maxLength="2"
+            size="2"
+            style={{ maxWidth: '30px' }}
+            value={newCard.year.substring(0, 2)}
+            onChange={(e) => handleYearChange(e.target.value)}
+            onKeyDown={handleYearKeyPress}
+          />
+        </div>
         <button onClick={handleAddCard}>Add Card</button>
       </div>
-      <div className="transactions">
+      <div className="transactions-container">
         <h2>Transactions</h2>
-        <ul style={{ listStyle: "none" }}>
+        <div className="total-section">
+          <span>Total: </span>
+          <span>{calculateTotalAmount()}</span>
+        </div>
+        <ul className="transactions-list">
           {transactions.map((transaction, index) => (
-            <li key={index}>
-              Card Number: {transaction.cardNumber}, Amount:{" "}
-              {transaction.amount}, Description: {transaction.description}
+            <li key={index} className="transaction-item">
+              <div className="transaction-info">
+                <span className="transaction-label">Card Number:</span>
+                <span className="transaction-value">
+                  {transaction.cardNumber}
+                </span>
+              </div>
+              <div className="transaction-info">
+                <span className="transaction-label">Amount:</span>
+                <span className="transaction-value">{transaction.amount}</span>
+              </div>
+              <div className="transaction-info">
+                <span className="transaction-label">Description:</span>
+                <span className="transaction-value">
+                  {transaction.description}
+                </span>
+              </div>
             </li>
           ))}
         </ul>
@@ -197,7 +275,6 @@ function BankAccounts() {
           <button onClick={handleAddTransaction}>Add Transaction</button>
         </div>
       </div>
-      
     </div>
   );
 }

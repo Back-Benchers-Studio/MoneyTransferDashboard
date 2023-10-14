@@ -1,24 +1,163 @@
 .bank-cards-container {
-    display: flex;
-    overflow-x: auto;
-    white-space: nowrap; 
-  }
-  
-  .bank-cards-inner {
-    display: inline-block; 
-    white-space: normal; 
-    font-size: 0; 
-  }
-  
-  
-  .visa-card {
-    width: 300px; 
-    height: 200px; 
-    border-radius: 10px;
-    margin: 10px;
-  }
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
 
-  .transactions {
-    margin-top: 60px;
-  }
-  
+.bank-cards-inner {
+  display: inline-block;
+  white-space: normal;
+  font-size: 0;
+}
+
+.visa-card {
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.transactions {
+  margin-top: 60px;
+}
+
+.add-card-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  margin: 20px 0;
+}
+
+.add-card-form h2 {
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.add-card-form label {
+  display: block;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.add-card-form input[type="text"] {
+  width: 50%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  text-align: center;
+}
+
+.add-card-form input[type="number"] {
+  width: 50%;
+  padding: 8px;
+  margin: 5px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  text-align: center;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}
+
+.add-card-form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 15%;
+  margin: 10px 0 0 0;
+}
+
+.valid-thru-input{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.transactions-container {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 20px;
+  margin: 20px 0;
+  align-items: center;
+}
+
+.transactions-container h2 {
+  font-size: 20px;
+  margin: 0 0 10px;
+}
+
+.transactions-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.transaction-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.transaction-info {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+}
+
+.transaction-label {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.transaction-value {
+  font-size: 16px;
+}
+
+.transaction-input {
+  display: flex;
+  margin: 10px 0;
+  align-items: center;
+}
+
+.transaction-input select,
+.transaction-input input[type="text"] {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.transaction-input select,
+.transaction-input input[type="number"] {
+  padding: 8px;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+}
+
+.transaction-input button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
