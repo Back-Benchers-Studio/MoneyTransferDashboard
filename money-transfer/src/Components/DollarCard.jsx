@@ -5,7 +5,7 @@ import '../Styles/DollarCard.css';
 
 function DollarCard({cardNumber, cardHolder, validThru }) {
   return (
-    <div className="visa-card">
+    <div className="dollar-visa-card">
       <div className="card-front">
         <div className="chip"></div>
         <div className="card-number">

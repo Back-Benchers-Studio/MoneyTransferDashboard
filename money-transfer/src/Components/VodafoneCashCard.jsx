@@ -13,7 +13,6 @@ function Card({mobileNumber, numberHolder}) {
         </div>
         <div className="card-info">
           <div className="Number-holder">
-            <label>Number Holder: </label>
             <span>{numberHolder}</span>
           </div>
         </div>

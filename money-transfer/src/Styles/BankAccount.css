@@ -139,7 +139,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .transaction-input select,
 .transaction-input input[type="text"] {
   padding: 8px;
-  margin-right: 10px;
+  margin-left: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   outline: none;
@@ -148,7 +148,7 @@ input[type="number"]::-webkit-outer-spin-button {
 .transaction-input select,
 .transaction-input input[type="number"] {
   padding: 8px;
-  margin-right: 10px;
+  margin-left: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   outline: none;

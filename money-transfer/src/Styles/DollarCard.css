@@ -1,30 +1,30 @@
-.visa-card {
-    width: 300px;
-    height: 200px;
-    border-radius: 10px;
-    display: flex;
-    perspective: 1000px;
-    transition: transform 0.5s;
-    background: linear-gradient(45deg, #0c5cdb, #023b7c, #66a4d9, #1776c4);
-    color: #fff;
-    margin: 10px;
-  }
-  
-  .card-front {
-    width: 100%;
-    height: 70%;
-    position: absolute;
-    backface-visibility: hidden;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  
-  .card-front {
-    transform: rotateY(0deg);
-  }
+.dollar-visa-card {
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  display: flex;
+  perspective: 1000px;
+  transition: transform 0.5s;
+  background: linear-gradient(120deg, #002e77, #0354b1, #1069b8, #3d9be7);
+  color: #fff;
+  margin: 10px;
+}
 
-  .card-holder, .valid-thru {
-    background: transparent;
-  }
-  
+.card-front {
+  width: 100%;
+  height: 70%;
+  position: absolute;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-front {
+  transform: rotateY(0deg);
+}
+
+.card-holder,
+.valid-thru {
+  background: transparent;
+}

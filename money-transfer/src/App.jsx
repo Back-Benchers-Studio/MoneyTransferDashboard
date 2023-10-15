@@ -12,7 +12,7 @@ import DollarBankAccounts from './pages/DollarBankAccounts';
 function App() {
 
   return (
-    <BankAccounts/>
+    <VodafoneCashAccounts/>
   );
 }
 

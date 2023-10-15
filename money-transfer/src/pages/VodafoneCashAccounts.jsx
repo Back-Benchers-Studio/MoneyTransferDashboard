@@ -132,7 +132,7 @@ function VodafoneCashAccounts() {
 
   return (
     <div>
-      <h1>Vodafone Cash Accounts</h1>
+      <h1>حسابات فودافون كاش</h1>
       <div className="bank-cards-container">
         <Swiper
           slidesPerView={3}
@@ -154,8 +154,8 @@ function VodafoneCashAccounts() {
         </Swiper>
       </div>
       <div className="add-card-form">
-        <h2>Add Card</h2>
-        <label>Card Number:</label>
+        <h2>إضافة رقم</h2>
+        <label>رقم الموبايل</label>
         <input
           type="number"
           value={newCard.MobileNumber}
@@ -163,7 +163,7 @@ function VodafoneCashAccounts() {
             setNewCard({ ...newCard, MobileNumber: e.target.value })
           }
         />
-        <label>Card Holder:</label>
+        <label>صاحب الرقم</label>
         <input
           type="text"
           value={newCard.NumberHolder}
@@ -171,10 +171,10 @@ function VodafoneCashAccounts() {
             setNewCard({ ...newCard, NumberHolder: e.target.value })
           }
         />
-        <button onClick={handleAddCard}>Add Card</button>
+        <button onClick={handleAddCard}>إضافة</button>
       </div>
       <div className="transactions-container">
-        <h2>Transactions</h2>
+        <h2>المعاملات</h2>
         <div className="total-section">
           <span>Total: </span>
           <span>{calculateTotalAmount()}</span>
@@ -191,21 +191,21 @@ function VodafoneCashAccounts() {
               <SwiperSlide key={index}>
                 <li key={index} className="transaction-item">
                   <div className="transaction-info">
-                    <span className="transaction-label">Mobile Number:</span>
+                    <span className="transaction-label">تفاصيل</span>
                     <span className="transaction-value">
-                      {transaction.MobileNumber}
+                      {transaction.description}
                     </span>
                   </div>
                   <div className="transaction-info">
-                    <span className="transaction-label">Amount:</span>
+                    <span className="transaction-label">القيمة</span>
                     <span className="transaction-value">
                       {transaction.amount}
                     </span>
                   </div>
                   <div className="transaction-info">
-                    <span className="transaction-label">Description:</span>
+                    <span className="transaction-label">رقم الموبايل</span>
                     <span className="transaction-value">
-                      {transaction.description}
+                      {transaction.MobileNumber}
                     </span>
                   </div>
                 </li>
@@ -214,6 +214,26 @@ function VodafoneCashAccounts() {
           </Swiper>
         </ul>
         <div className="transaction-input">
+        <button onClick={handleAddTransaction}>إضافة العملية</button>
+        <input
+            type="text"
+            placeholder="تفاصيل"
+            value={newTransaction.description}
+            onChange={(e) =>
+              setNewTransaction({
+                ...newTransaction,
+                description: e.target.value,
+              })
+            }
+          />
+          <input
+            type="number"
+            placeholder="القيمة"
+            value={newTransaction.amount}
+            onChange={(e) =>
+              setNewTransaction({ ...newTransaction, amount: e.target.value })
+            }
+          />
           <select
             value={newTransaction.selectedCard}
             onChange={(e) =>
@@ -223,33 +243,13 @@ function VodafoneCashAccounts() {
               })
             }
           >
-            <option value="">Select a Card</option>
+            <option value="">إختر رقم</option>
             {vodafoneCards.map((card) => (
               <option key={card.MobileNumber} value={card.MobileNumber}>
                 {card.NumberHolder} - {card.MobileNumber}
               </option>
             ))}
           </select>
-          <input
-            type="number"
-            placeholder="Amount"
-            value={newTransaction.amount}
-            onChange={(e) =>
-              setNewTransaction({ ...newTransaction, amount: e.target.value })
-            }
-          />
-          <input
-            type="text"
-            placeholder="Description"
-            value={newTransaction.description}
-            onChange={(e) =>
-              setNewTransaction({
-                ...newTransaction,
-                description: e.target.value,
-              })
-            }
-          />
-          <button onClick={handleAddTransaction}>Add Transaction</button>
         </div>
       </div>
       <ToastContainer />

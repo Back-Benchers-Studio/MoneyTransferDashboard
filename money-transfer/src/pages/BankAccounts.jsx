@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
-import VisaCard from "../Components/Card";
+import Card from "../Components/Card";
 import "../Styles/BankAccount.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -165,7 +165,7 @@ function BankAccounts() {
 
   return (
     <div>
-      <h1>Bank Accounts</h1>
+      <h1>حسابات البنوك</h1>
       <div className="bank-cards-container">
         <Swiper
           updateOnWindowResize={true}
@@ -178,7 +178,7 @@ function BankAccounts() {
         >
           {bankCards.map((card) => (
             <SwiperSlide key={card.id}>
-              <VisaCard
+              <Card
                 key={card.id}
                 cardHolder={card.cardHolder}
                 cardNumber={card.cardNumber}
@@ -189,7 +189,7 @@ function BankAccounts() {
         </Swiper>
       </div>
       <div className="add-card-form">
-        <h2>Add Card</h2>
+        <h2>إضافة كارت</h2>
         <div style={{ display: "flex", flexDirection: "row", gap: 20 }}>
           <label>Card Number:</label>
           <input
@@ -245,10 +245,10 @@ function BankAccounts() {
             />
           </div>
         </div>
-        <button onClick={handleAddCard}>Add Card</button>
+        <button onClick={handleAddCard}>إضافة</button>
       </div>
       <div className="transactions-container">
-        <h2>Transactions</h2>
+        <h2>المعاملات</h2>
         <div className="total-section">
           <span>Total: </span>
           <span>{calculateTotalAmount()}</span>
@@ -265,54 +265,32 @@ function BankAccounts() {
               <SwiperSlide key={index}>
                 <li key={index} className="transaction-item">
                   <div className="transaction-info">
-                    <span className="transaction-label">Card Number:</span>
+                    <span className="transaction-label">تفاصيل</span>
                     <span className="transaction-value">
-                      {transaction.cardNumber}
+                      {transaction.description}
                     </span>
                   </div>
                   <div className="transaction-info">
-                    <span className="transaction-label">Amount:</span>
+                    <span className="transaction-label">القيمة</span>
                     <span className="transaction-value">
                       {transaction.amount}
                     </span>
                   </div>
                   <div className="transaction-info">
-                    <span className="transaction-label">Description:</span>
+                    <span className="transaction-label">رقم الكارت</span>
                     <span className="transaction-value">
-                      {transaction.description}
+                      {transaction.cardNumber}
                     </span>
                   </div>
+                  
                 </li>
               </SwiperSlide>
             ))}
           </Swiper>
         </ul>
         <div className="transaction-input">
-          <select
-            value={newTransaction.selectedCard}
-            onChange={(e) =>
-              setNewTransaction({
-                ...newTransaction,
-                selectedCard: e.target.value,
-              })
-            }
-          >
-            <option value="">Select a Card</option>
-            {bankCards.map((card) => (
-              <option key={card.cardNumber} value={card.cardNumber}>
-                {card.cardHolder} - {card.cardNumber}
-              </option>
-            ))}
-          </select>
-          <input
-            type="text"
-            placeholder="Amount"
-            value={newTransaction.amount}
-            onChange={(e) =>
-              setNewTransaction({ ...newTransaction, amount: e.target.value })
-            }
-          />
-          <input
+        <button onClick={handleAddTransaction}>إضافة العملية</button>
+        <input
             type="text"
             placeholder="Description"
             value={newTransaction.description}
@@ -323,7 +301,30 @@ function BankAccounts() {
               })
             }
           />
-          <button onClick={handleAddTransaction}>Add Transaction</button>
+          <input
+            type="text"
+            placeholder="Amount"
+            value={newTransaction.amount}
+            onChange={(e) =>
+              setNewTransaction({ ...newTransaction, amount: e.target.value })
+            }
+          />
+          <select
+            value={newTransaction.selectedCard}
+            onChange={(e) =>
+              setNewTransaction({
+                ...newTransaction,
+                selectedCard: e.target.value,
+              })
+            }
+          >
+            <option value="">إختر كارت</option>
+            {bankCards.map((card) => (
+              <option key={card.cardNumber} value={card.cardNumber}>
+                {card.cardHolder} - {card.cardNumber}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
       <ToastContainer />
