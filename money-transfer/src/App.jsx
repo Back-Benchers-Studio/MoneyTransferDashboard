@@ -6,6 +6,7 @@ import './App.css'
 import Overview from './pages/Overview';
 import BankAccounts from './pages/BankAccounts';
 import VodafoneCashAccounts from './pages/VodafoneCashAccounts';
+import DollarBankAccounts from './pages/DollarBankAccounts';
 
 
 function App() {

@@ -2,6 +2,12 @@
 import React, { useState, useEffect } from "react";
 import VodafoneCashCard from "../Components/VodafoneCashCard";
 import "../Styles/VodafoneCash.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+import { Pagination } from "swiper/modules";
 
 function VodafoneCashAccounts() {
   const [vodafoneCards, setvodafoneCardsData] = useState([]);
@@ -51,6 +57,12 @@ function VodafoneCashAccounts() {
         amount: 50,
         description: "Purchase 2",
       },
+      {
+        id: 3,
+        MobileNumber: "01004076442",
+        amount: 200,
+        description: "Purchase 3",
+      },
     ];
     setTransactions(mockTransactions);
   }, []);
@@ -81,39 +93,66 @@ function VodafoneCashAccounts() {
   const handleAddCard = () => {
     console.log("Adding a new card...");
     if (newCard.MobileNumber && newCard.NumberHolder) {
-      console.log("New card data:", newCard);
-      const addedCard = {
-        id: vodafoneCards.length + 1,
-        numberHolder: newCard.NumberHolder,
-        mobileNumber: newCard.MobileNumber,
-      };
-      console.log("Added card data:", addedCard);
-      setvodafoneCardsData([
-        ...vodafoneCards,
-        {
+      if (!checkCardDuplicate(newCard.MobileNumber)) {
+        console.log("New card data:", newCard);
+        const addedCard = {
           id: vodafoneCards.length + 1,
-          NumberHolder: newCard.NumberHolder,
-          MobileNumber: newCard.MobileNumber,
-        },
-      ]);
-      console.log("vodafone cash cards data after update:", vodafoneCards);
-      setNewCard({ MobileNumber: "", NumberHolder: "" });
+          numberHolder: newCard.NumberHolder,
+          mobileNumber: newCard.MobileNumber,
+        };
+        console.log("Added card data:", addedCard);
+        setvodafoneCardsData([
+          ...vodafoneCards,
+          {
+            id: vodafoneCards.length + 1,
+            NumberHolder: newCard.NumberHolder,
+            MobileNumber: newCard.MobileNumber,
+          },
+        ]);
+        console.log("vodafone cash cards data after update:", vodafoneCards);
+        setNewCard({ MobileNumber: "", NumberHolder: "" });
+      }
     }
+  };
+
+  const calculateTotalAmount = () => {
+    const totalAmount = transactions.reduce((total, transaction) => {
+      return total + parseInt(transaction.amount);
+    }, 0);
+    return totalAmount;
+  };
+
+  const checkCardDuplicate = (mobileNumber) => {
+    if (vodafoneCards.some((card) => card.MobileNumber === mobileNumber)) {
+      toast.error("Card with the same number already exists");
+      return true;
+    }
+    return false;
   };
 
   return (
     <div>
       <h1>Vodafone Cash Accounts</h1>
       <div className="bank-cards-container">
-        {vodafoneCards.map((card) => (
-          <VodafoneCashCard
-            key={card.id}
-            numberHolder={card.NumberHolder}
-            mobileNumber={card.MobileNumber}
-          />
-        ))}
+        <Swiper
+          slidesPerView={3}
+          pagination={{
+            dynamicBullets: true,
+          }}
+          modules={[Pagination]}
+          className="mySwiper"
+        >
+          {vodafoneCards.map((card) => (
+            <SwiperSlide key={card.id}>
+              <VodafoneCashCard
+                key={card.id}
+                numberHolder={card.NumberHolder}
+                mobileNumber={card.MobileNumber}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
-      {/* <button onClick={toggleAddCardModal}>Add Card (+)</button> */}
       <div className="add-card-form">
         <h2>Add Card</h2>
         <label>Card Number:</label>
@@ -136,27 +175,43 @@ function VodafoneCashAccounts() {
       </div>
       <div className="transactions-container">
         <h2>Transactions</h2>
+        <div className="total-section">
+          <span>Total: </span>
+          <span>{calculateTotalAmount()}</span>
+        </div>
         <ul className="transactions-list">
-          {transactions.map((transaction, index) => (
-            <li key={index} className="transaction-item">
-              <div className="transaction-info">
-                <span className="transaction-label">Mobile Number:</span>
-                <span className="transaction-value">
-                  {transaction.MobileNumber}
-                </span>
-              </div>
-              <div className="transaction-info">
-                <span className="transaction-label">Amount:</span>
-                <span className="transaction-value">{transaction.amount}</span>
-              </div>
-              <div className="transaction-info">
-                <span className="transaction-label">Description:</span>
-                <span className="transaction-value">
-                  {transaction.description}
-                </span>
-              </div>
-            </li>
-          ))}
+          <Swiper
+            direction="vertical"
+            slidesPerView={3}
+            onSlideChange={() => console.log("slide change")}
+            onSwiper={(swiper) => console.log(swiper)}
+            className="swiper-container"
+          >
+            {transactions.map((transaction, index) => (
+              <SwiperSlide key={index}>
+                <li key={index} className="transaction-item">
+                  <div className="transaction-info">
+                    <span className="transaction-label">Mobile Number:</span>
+                    <span className="transaction-value">
+                      {transaction.MobileNumber}
+                    </span>
+                  </div>
+                  <div className="transaction-info">
+                    <span className="transaction-label">Amount:</span>
+                    <span className="transaction-value">
+                      {transaction.amount}
+                    </span>
+                  </div>
+                  <div className="transaction-info">
+                    <span className="transaction-label">Description:</span>
+                    <span className="transaction-value">
+                      {transaction.description}
+                    </span>
+                  </div>
+                </li>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </ul>
         <div className="transaction-input">
           <select
@@ -197,6 +252,7 @@ function VodafoneCashAccounts() {
           <button onClick={handleAddTransaction}>Add Transaction</button>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

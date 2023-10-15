@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
-import VisaCard from "../Components/Card";
+import VisaCard from "../Components/DollarCard";
 import "../Styles/BankAccount.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -10,7 +10,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { Pagination } from "swiper/modules";
 
-function BankAccounts() {
+function DollarBankAccounts() {
   const [bankCards, setBankCardsData] = useState([]);
   const [transactions, setTransactions] = useState([]);
 
@@ -165,7 +165,7 @@ function BankAccounts() {
 
   return (
     <div>
-      <h1>Bank Accounts</h1>
+      <h1>Dollar Bank Accounts</h1>
       <div className="bank-cards-container">
         <Swiper
           updateOnWindowResize={true}
@@ -188,6 +188,7 @@ function BankAccounts() {
           ))}
         </Swiper>
       </div>
+
       <div className="add-card-form">
         <h2>Add Card</h2>
         <div style={{ display: "flex", flexDirection: "row", gap: 20 }}>
@@ -331,4 +332,4 @@ function BankAccounts() {
   );
 }
 
-export default BankAccounts;
+export default DollarBankAccounts;
