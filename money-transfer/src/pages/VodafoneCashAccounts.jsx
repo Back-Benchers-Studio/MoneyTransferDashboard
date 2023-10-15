@@ -159,9 +159,11 @@ function VodafoneCashAccounts() {
         <input
           type="number"
           value={newCard.MobileNumber}
-          onChange={(e) =>
-            setNewCard({ ...newCard, MobileNumber: e.target.value })
-          }
+          maxLength={11}
+          onChange={(e) => {
+            const inputVal = e.target.value.replace(/\D/g, "");
+            setNewCard({ ...newCard, MobileNumber: inputVal.substring(0, 11) });
+          }}
         />
         <label>صاحب الرقم</label>
         <input
@@ -214,8 +216,8 @@ function VodafoneCashAccounts() {
           </Swiper>
         </ul>
         <div className="transaction-input">
-        <button onClick={handleAddTransaction}>إضافة العملية</button>
-        <input
+          <button onClick={handleAddTransaction}>إضافة العملية</button>
+          <input
             type="text"
             placeholder="تفاصيل"
             value={newTransaction.description}

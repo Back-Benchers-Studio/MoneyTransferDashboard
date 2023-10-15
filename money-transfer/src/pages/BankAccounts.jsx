@@ -193,12 +193,13 @@ function BankAccounts() {
         <div style={{ display: "flex", flexDirection: "row", gap: 20 }}>
           <label>Card Number:</label>
           <input
-            type="text"
+            type="number"
             value={newCard.cardNumber}
             maxLength={16}
-            onChange={(e) =>
-              setNewCard({ ...newCard, cardNumber: e.target.value })
-            }
+            onChange={(e) =>{
+              const inputVal = e.target.value.replace(/\D/g, "");
+              setNewCard({ ...newCard, cardNumber: inputVal.substring(0, 16) })
+            }}
           />
         </div>
         <div style={{ display: "flex", flexDirection: "row", gap: 30 }}>
