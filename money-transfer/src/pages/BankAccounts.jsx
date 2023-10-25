@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+// import xlsx from "xlsx";
 
 import { Pagination } from "swiper/modules";
 
@@ -166,6 +167,24 @@ function BankAccounts() {
   return (
     <div>
       <h1>حسابات البنوك</h1>
+      <button onClick={() => {
+        console.log("test")
+        fetch('http://localhost:4000/api/v1/records/export',{method:"GET"}).then(async (res) =>{
+          const blob = await res.blob();
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'reports.xlsx';
+          document.body.appendChild(a);
+          a.click();
+          window.URL.revokeObjectURL(url);
+      }
+         ).catch(err => {
+          console.log(err)
+         }
+          )
+      }
+        }>تحميل التقرير</button>
       <div className="bank-cards-container">
         <Swiper
           updateOnWindowResize={true}
@@ -212,6 +231,7 @@ function BankAccounts() {
             }
           />
         </div>
+        
         <div
           style={{
             display: "flex",
